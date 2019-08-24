@@ -1,0 +1,23 @@
+{
+  "name": "feelsbirthdayman",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ruben Medina <dev@rubenmedina.com> (https://rubenmedina.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samrum/feelsbirthdayman.git"
+  },
+  "homepage": "https://github.com/samrum/feelsbirthdayman#readme",
+  "scripts": {
+    "send": "node index.js"
+  },
+  "dependencies": {
+    "@google-cloud/translate": "^4.1.3",
+    "dotenv": "^8.1.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "prettier": "1.18.2"
+  }
+}
