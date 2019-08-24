@@ -4,6 +4,8 @@ Translates a birthday message using Google Cloud's Translate API into a supporte
 
 Supports pinging specific users via command line arguments.
 
+![Slack output](https://i.imgur.com/JwavnB5.png)
+
 # Usage
 
 ## Setup
@@ -15,6 +17,6 @@ Supports pinging specific users via command line arguments.
 1.  Add required variables to `.env.sample` file and drop the `.sample` extension.
 1.  Add google cloud credentials file `googleApplicationCredentials.json` to project root
 
-## Usage
+## Execution
 
     yarn send @ruben @samrum
