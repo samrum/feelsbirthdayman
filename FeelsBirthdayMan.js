@@ -27,14 +27,14 @@ class FeelsBirthdayMan {
       body: JSON.stringify(body),
     });
 
-    if (response && response.ok && typeof response.json === "function") {
-      return response.json();
+    if (!(response && response.ok && typeof response.json === "function")) {
+      const error = new Error("Failed to post message to Slack");
+      error.response = response;
+
+      throw error;
     }
 
-    return {
-      error: "Failed to post message",
-      response,
-    };
+    return response.json();
   }
 
   static async getRandomTranslation(message) {
@@ -49,29 +49,42 @@ class FeelsBirthdayMan {
     const targetLanguage =
       languages[Math.floor(Math.random() * languages.length)];
 
-    console.log(`Using ${targetLanguage.name}!`);
-
     const [translation] = await translate.translate(
       message,
       targetLanguage.code,
     );
 
-    return translation;
+    return {
+      translation,
+      language: targetLanguage.name,
+    };
   }
 
   async postBirthdayMessage() {
-    return FeelsBirthdayMan.postMessage(await this.getBirthdayMessage());
+    const { language, message } = await this.getBirthdayMessage();
+
+    const postResponse = await FeelsBirthdayMan.postMessage(message);
+
+    return {
+      language,
+      message,
+      postResponse,
+    };
   }
 
   async getBirthdayMessage() {
-    const translation = await FeelsBirthdayMan.getRandomTranslation(
-      "Happy Birthday!",
-    );
+    const {
+      language,
+      translation,
+    } = await FeelsBirthdayMan.getRandomTranslation("Happy Birthday!");
 
     const peopleString =
       this.people.length > 0 ? `${this.people.join(" ")} ` : "";
 
-    return `${translation} ${peopleString}:feelsbirthdayman: :balloon:`;
+    return {
+      language,
+      message: `${translation} ${peopleString}:feelsbirthdayman: :balloon:`,
+    };
   }
 }
 
