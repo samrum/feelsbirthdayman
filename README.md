@@ -1,6 +1,6 @@
 # feelsbirthdayman
 
-Translates a birthday message using Google Cloud's Translate API into a supported language and posts it to a slack channel.
+Use the [Google Cloud Translation API](https://cloud.google.com/translate/docs/) to translate "Happy Birthday!" into a random language and then use the [Slack API](https://api.slack.com/) to post it into a Slack channel along with some emoji.
 
 Supports pinging specific users via command line arguments (space delimited).
 
@@ -17,6 +17,6 @@ Supports pinging specific users via command line arguments (space delimited).
 1.  Add required variables to `.env.sample` file and drop the `.sample` extension.
 1.  Add google cloud credentials file `googleApplicationCredentials.json` to project root
 
-## Execution
+## Run
 
     yarn send @ruben
