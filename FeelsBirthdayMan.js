@@ -101,7 +101,7 @@ class FeelsBirthdayMan {
   }
 
   async getMentions() {
-    const userBits = [];
+    const mentionBits = [];
 
     const userList = await this.getSlackUsers();
 
@@ -113,13 +113,13 @@ class FeelsBirthdayMan {
           return FeelsBirthdayMan.mentionMatchesUser(mention, user.profile);
         });
 
-        userBits.push(mentionedUser ? `<@${mentionedUser.id}>` : user);
+        mentionBits.push(mentionedUser ? `<@${mentionedUser.id}>` : user);
       } else {
-        userBits.push(user);
+        mentionBits.push(user);
       }
     });
 
-    return userBits.length > 0 ? `${userBits.join(" ")} ` : "";
+    return mentionBits.length > 0 ? `${mentionBits.join(" ")} ` : "";
   }
 
   async getBirthdayMessage() {
