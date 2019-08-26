@@ -14,7 +14,7 @@ class SlackRequestError extends Error {
 class SlackRequest {
   constructor(private slackToken: string) {}
 
-  async makeSlackRequest(
+  private async makeSlackRequest(
     apiMethod: string,
     method: string = METHOD_GET,
     body: object = {},

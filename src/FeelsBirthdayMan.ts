@@ -3,7 +3,7 @@ import TranslateRequest from "./TranslateRequest";
 import { SlackUser, BirthdayMessage } from "./types";
 
 class FeelsBirthdayMan {
-  static mentionMatchesUser(mention: string, user: SlackUser): boolean {
+  private static mentionMatchesUser(mention: string, user: SlackUser): boolean {
     return [
       user.profile.display_name_normalized,
       user.profile.display_name,
@@ -34,7 +34,7 @@ class FeelsBirthdayMan {
     };
   }
 
-  async getMentions(usersToMention: string[]): Promise<string> {
+  private async getMentions(usersToMention: string[]): Promise<string> {
     const userList = await this.slackRequest.getSlackUsers();
 
     const mentionBits = this.getMentionBits(usersToMention, userList);
@@ -42,7 +42,10 @@ class FeelsBirthdayMan {
     return mentionBits.length > 0 ? `${mentionBits.join(" ")} ` : "";
   }
 
-  getMentionBits(usersToMention: string[], userList: SlackUser[]): string[] {
+  private getMentionBits(
+    usersToMention: string[],
+    userList: SlackUser[],
+  ): string[] {
     const mentionBits: string[] = [];
 
     usersToMention.forEach(user => {
@@ -62,7 +65,7 @@ class FeelsBirthdayMan {
     return mentionBits;
   }
 
-  async getBirthdayMessage(mentions = ""): Promise<BirthdayMessage> {
+  private async getBirthdayMessage(mentions = ""): Promise<BirthdayMessage> {
     const {
       language,
       translation,
