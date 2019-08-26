@@ -3,7 +3,11 @@ import TranslateRequest from "./TranslateRequest";
 import { SlackUser, BirthdayMessage } from "./types";
 
 class FeelsBirthdayMan {
+<<<<<<< HEAD:src/FeelsBirthdayMan.ts
   private static mentionMatchesUser(mention: string, user: SlackUser): boolean {
+=======
+  static mentionMatchesUser(mention: string, user: SlackUser): boolean {
+>>>>>>> 597f303e940298e4e5e9b51b6672bebb78a3e311:src/FeelsBirthdayMan.ts
     return [
       user.profile.display_name_normalized,
       user.profile.display_name,
@@ -34,7 +38,11 @@ class FeelsBirthdayMan {
     };
   }
 
+<<<<<<< HEAD:src/FeelsBirthdayMan.ts
   private async getMentions(usersToMention: string[]): Promise<string> {
+=======
+  async getMentions(usersToMention: string[]): Promise<string> {
+>>>>>>> 597f303e940298e4e5e9b51b6672bebb78a3e311:src/FeelsBirthdayMan.ts
     const userList = await this.slackRequest.getSlackUsers();
 
     const mentionBits = this.getMentionBits(usersToMention, userList);
@@ -42,10 +50,14 @@ class FeelsBirthdayMan {
     return mentionBits.length > 0 ? `${mentionBits.join(" ")} ` : "";
   }
 
+<<<<<<< HEAD:src/FeelsBirthdayMan.ts
   private getMentionBits(
     usersToMention: string[],
     userList: SlackUser[],
   ): string[] {
+=======
+  getMentionBits(usersToMention: string[], userList: SlackUser[]): string[] {
+>>>>>>> 597f303e940298e4e5e9b51b6672bebb78a3e311:src/FeelsBirthdayMan.ts
     const mentionBits: string[] = [];
 
     usersToMention.forEach(user => {
@@ -65,7 +77,11 @@ class FeelsBirthdayMan {
     return mentionBits;
   }
 
+<<<<<<< HEAD:src/FeelsBirthdayMan.ts
   private async getBirthdayMessage(mentions = ""): Promise<BirthdayMessage> {
+=======
+  async getBirthdayMessage(mentions = ""): Promise<BirthdayMessage> {
+>>>>>>> 597f303e940298e4e5e9b51b6672bebb78a3e311:src/FeelsBirthdayMan.ts
     const {
       language,
       translation,
