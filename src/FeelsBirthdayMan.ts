@@ -1,5 +1,9 @@
+import SlackRequest from "./SlackRequest";
+import TranslateRequest from "./TranslateRequest";
+import { SlackUser, BirthdayMessage } from "./types";
+
 class FeelsBirthdayMan {
-  static mentionMatchesUser(mention, user) {
+  static mentionMatchesUser(mention: string, user: SlackUser): boolean {
     return [
       user.profile.display_name_normalized,
       user.profile.display_name,
@@ -8,20 +12,20 @@ class FeelsBirthdayMan {
     ].includes(mention);
   }
 
-  constructor(slackRequest, translateRequest) {
-    this.slackRequest = slackRequest;
-    this.translateRequest = translateRequest;
-  }
+  constructor(
+    private slackRequest: SlackRequest,
+    private translateRequest: TranslateRequest,
+  ) {}
 
-  async postBirthdayMessage(usersToMention = []) {
+  async postBirthdayMessage(
+    channel: string,
+    usersToMention: string[] = [],
+  ): Promise<any> {
     const mentions = await this.getMentions(usersToMention);
 
     const { language, message } = await this.getBirthdayMessage(mentions);
 
-    const postResponse = await this.slackRequest.postMessage(
-      process.env.SLACK_CHANNEL,
-      message,
-    );
+    const postResponse = await this.slackRequest.postMessage(channel, message);
 
     return {
       language,
@@ -30,7 +34,7 @@ class FeelsBirthdayMan {
     };
   }
 
-  async getMentions(usersToMention) {
+  async getMentions(usersToMention: string[]): Promise<string> {
     const userList = await this.slackRequest.getSlackUsers();
 
     const mentionBits = this.getMentionBits(usersToMention, userList);
@@ -38,8 +42,8 @@ class FeelsBirthdayMan {
     return mentionBits.length > 0 ? `${mentionBits.join(" ")} ` : "";
   }
 
-  getMentionBits(usersToMention, userList) {
-    const mentionBits = [];
+  getMentionBits(usersToMention: string[], userList: SlackUser[]): string[] {
+    const mentionBits: string[] = [];
 
     usersToMention.forEach(user => {
       if (user.indexOf("@") === 0) {
@@ -58,7 +62,7 @@ class FeelsBirthdayMan {
     return mentionBits;
   }
 
-  async getBirthdayMessage(mentions = "") {
+  async getBirthdayMessage(mentions = ""): Promise<BirthdayMessage> {
     const {
       language,
       translation,
@@ -71,4 +75,4 @@ class FeelsBirthdayMan {
   }
 }
 
-module.exports = FeelsBirthdayMan;
+export default FeelsBirthdayMan;

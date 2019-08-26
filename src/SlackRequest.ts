@@ -1,14 +1,24 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
+import { SlackUser } from "./types";
 
 const METHOD_GET = "get";
 const METHOD_POST = "post";
 
-class SlackRequest {
-  constructor(slackToken) {
-    this.slackToken = slackToken;
+class SlackRequestError extends Error {
+  constructor(message?: string, public response?: any) {
+    super(message);
+    Object.setPrototypeOf(this, new.target.prototype);
   }
+}
 
-  async makeSlackRequest(apiMethod, method = METHOD_GET, body = {}) {
+class SlackRequest {
+  constructor(private slackToken: string) {}
+
+  async makeSlackRequest(
+    apiMethod: string,
+    method: string = METHOD_GET,
+    body: object = {},
+  ): Promise<any> {
     const headers = {
       Authorization: `Bearer ${this.slackToken}`,
       "Content-type": "application/json; charset=utf-8",
@@ -23,25 +33,25 @@ class SlackRequest {
     });
 
     if (!(response && response.ok && typeof response.json === "function")) {
-      const error = new Error(`Slack ${apiMethod} request failed`);
-      error.response = response;
-
-      throw error;
+      throw new SlackRequestError(
+        `Slack ${apiMethod} request failed`,
+        response,
+      );
     }
 
     const jsonResponse = await response.json();
 
     if (!jsonResponse.ok) {
-      const error = new Error(`Slack ${apiMethod} request failed`);
-      error.response = jsonResponse;
-
-      throw error;
+      throw new SlackRequestError(
+        `Slack ${apiMethod} request failed`,
+        jsonResponse,
+      );
     }
 
     return jsonResponse;
   }
 
-  async postMessage(channel, text) {
+  async postMessage(channel: string, text: string): Promise<any> {
     return this.makeSlackRequest("chat.postMessage", METHOD_POST, {
       channel,
       text,
@@ -50,11 +60,12 @@ class SlackRequest {
     });
   }
 
-  async getSlackUsers() {
+  async getSlackUsers(): Promise<SlackUser[]> {
     const { members = [] } = await this.makeSlackRequest("users.list");
 
     return members;
   }
 }
 
-module.exports = SlackRequest;
+export default SlackRequest;
+export { SlackRequestError };
