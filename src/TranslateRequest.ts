@@ -1,11 +1,10 @@
-const { Translate } = require("@google-cloud/translate");
+import { Translate } from "@google-cloud/translate";
+import { RandomTranslation } from "./types";
 
 class TranslateRequest {
-  constructor(projectId) {
-    this.projectId = projectId;
-  }
+  constructor(private projectId: string) {}
 
-  async getRandomTranslation(message) {
+  async getRandomTranslation(message: string): Promise<RandomTranslation> {
     const translate = new Translate({
       projectId: this.projectId,
     });
@@ -29,4 +28,4 @@ class TranslateRequest {
   }
 }
 
-module.exports = TranslateRequest;
+export default TranslateRequest;
