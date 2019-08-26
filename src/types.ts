@@ -1,4 +1,4 @@
-export interface SlackUser {
+interface SlackUser {
   id: string;
   team_id: string;
   name: string;
@@ -40,12 +40,14 @@ export interface SlackUser {
   updated: number;
 }
 
-export interface RandomTranslation {
+interface RandomTranslation {
   language: string;
   translation: string;
 }
 
-export interface BirthdayMessage {
+interface BirthdayMessage {
   language: string;
   message: string;
 }
+
+export { SlackUser, RandomTranslation, BirthdayMessage };

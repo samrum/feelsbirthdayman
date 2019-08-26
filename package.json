@@ -1,7 +1,11 @@
 {
   "name": "feelsbirthdayman",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "author": "Ruben Medina <dev@rubenmedina.com> (https://rubenmedina.com)",
   "license": "MIT",
   "repository": {
@@ -10,7 +14,8 @@
   },
   "homepage": "https://github.com/samrum/feelsbirthdayman#readme",
   "scripts": {
-    "send": "ts-node src/index.ts"
+    "build": "rollup -c",
+    "send": "node dist/index.js"
   },
   "dependencies": {
     "@google-cloud/translate": "^4.1.3",
@@ -20,6 +25,8 @@
   },
   "devDependencies": {
     "prettier": "1.18.2",
+    "rollup": "^1.20.2",
+    "rollup-plugin-typescript2": "^0.23.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }
