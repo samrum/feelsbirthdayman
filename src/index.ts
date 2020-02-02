@@ -1,4 +1,5 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 import FeelsBirthdayMan from "./FeelsBirthdayMan";
 import SlackRequest from "./SlackRequest";
 import TranslateRequest from "./TranslateRequest";
