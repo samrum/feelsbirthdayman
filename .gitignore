@@ -15,3 +15,4 @@ googleApplicationCredentials.json
 
 # Build
 .rpt2_cache
+dist/
